@@ -179,7 +179,10 @@ fn configure_for_device(
     } else {
         builder
     };
-    builder = builder.sample_rate(config.sample_rate.0.try_into().unwrap());
+    builder = builder
+        .sample_rate(config.sample_rate.0.try_into().unwrap())
+        .performance_mode(ndk::audio::AudioPerformanceMode::LowLatency)
+        .sharing_mode(ndk::audio::AudioSharingMode::Exclusive);
 
     // Note: Buffer size validation is not needed - the native AAudio API validates buffer sizes
     // when `open_stream()` is called.
